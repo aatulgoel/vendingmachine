@@ -34,11 +34,10 @@ public class ProductManagerImpl implements product.ProductManager {
 
     }
 
-    public String replenishStock(HashMap<Product, Integer> stockToReplenish, String transactionRef) {
+    public String replenishStock(HashMap<Product, Integer> stockToReplenish) {
         for (Map.Entry<Product, Integer> entry : stockToReplenish.entrySet()) {
             productQuantityMap.put(entry.getKey(), productQuantityMap.get(entry.getKey()) + stockToReplenish.get(entry.getKey()));
         }
-        persistTransactionRef(transactionRef);
         return "Success";
     }
 
@@ -52,7 +51,7 @@ public class ProductManagerImpl implements product.ProductManager {
     }
 
     public boolean isStockAvailable(Product requestedProduct) throws OutOfStockException {
-        if (productQuantityMap.get(requestedProduct).intValue() > 0) {
+        if (productQuantityMap.get(requestedProduct) > 0) {
             return true;
         } else {
             throw new OutOfStockException(requestedProduct.name() + " out of stock");
@@ -68,9 +67,7 @@ public class ProductManagerImpl implements product.ProductManager {
             }
         }
         return availableProducts;
-
     }
-
 
     private void persistTransactionRef(String transactionRef) {
         System.out.println(transactionRef);

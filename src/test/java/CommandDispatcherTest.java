@@ -18,7 +18,7 @@ public class CommandDispatcherTest {
     public void handleCompositeCommand1() {
 //        dispatcher.handleCompositeCommand("D,D,COKE");
 //        dispatcher.handleCompositeCommand("NI,COKE");
- //       dispatcher.handleCompositeCommand("D,NI,DI,PEPSI");
+        //       dispatcher.handleCompositeCommand("D,NI,DI,PEPSI");
 //        dispatcher.handleCompositeCommand("D,D,CANCEL");
 //        dispatcher.handleCompositeCommand("D,D,PEPSI,COKE");
     }

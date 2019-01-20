@@ -3,7 +3,6 @@ package money.impl;
 
 import exception.CurrencyNotSupportedException;
 import exception.InsufficientChangeException;
-import exception.InsufficientFundsException;
 import money.USCurrency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +61,7 @@ public class MoneyManagerImpl implements money.MoneyManager {
         }
     }
 
-    public Map<USCurrency, Integer> getChangeDenominations(int moneyToRefund) throws InsufficientFundsException {
+    public Map<USCurrency, Integer> getChangeDenominations(int moneyToRefund) throws InsufficientChangeException {
         int unitsOfCurrencyRequired;
         int unitsOfCurrencyAvialable;
         List<USCurrency> currencyInDescOrder = Money.moneyInDescOrder;

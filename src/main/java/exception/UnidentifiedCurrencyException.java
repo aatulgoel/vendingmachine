@@ -1,6 +1,6 @@
 package exception;
 
-public class UnidentifiedCurrencyException extends RuntimeException {
+public class UnidentifiedCurrencyException extends Exception {
     public UnidentifiedCurrencyException(String transactionRef) {
         super(transactionRef);
     }

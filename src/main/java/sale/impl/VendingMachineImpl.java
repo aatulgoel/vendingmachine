@@ -1,5 +1,6 @@
 package sale.impl;
 
+import exception.CurrencyNotSupportedException;
 import exception.InsufficientChangeException;
 import exception.OutOfStockException;
 import money.USCurrency;
@@ -33,7 +34,12 @@ public class VendingMachineImpl implements VendingMchine {
         }
         if (Money.isValidCurrency(coin.currencyName())) {
             order.setPayment(coin.pennyValue());
-            moneyManager.addToWallet(coin);
+            try {
+                moneyManager.addToWallet(coin);
+            } catch (CurrencyNotSupportedException e) {
+                LOG.info(e.getMessage());
+                display("Unsupported Currency");
+            }
             display("Balance = " + order.getPayment());
             return true;
         } else {
@@ -52,7 +58,12 @@ public class VendingMachineImpl implements VendingMchine {
         }
         if (Money.isValidCurrency(bill.currencyName())) {
             order.setPayment(bill.pennyValue());
-            moneyManager.addToWallet(bill);
+            try {
+                moneyManager.addToWallet(bill);
+            } catch (CurrencyNotSupportedException e) {
+                LOG.info(e.getMessage());
+                display("Unsupported Currency");
+            }
             display("Balance = " + order.getPayment());
             return true;
         } else {
@@ -69,9 +80,13 @@ public class VendingMachineImpl implements VendingMchine {
             return false;
         } else {
             // Order Cleanup
-            changeMap = moneyManager.getChangeDenominations(order.getPayment());
-            dispenseCash(changeMap);
-            order = null;
+            try {
+                changeMap = moneyManager.getChangeDenominations(order.getPayment());
+                dispenseCash(changeMap);
+                order = null;
+            } catch (InsufficientChangeException e) {
+                LOG.info(e.getMessage());
+            }
             return true;
         }
 
